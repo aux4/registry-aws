@@ -131,4 +131,4 @@ aux4 registry aws push myapp:latest \
 
 ## License
 
-Apache-2.0. See [LICENSE](./license) for details.
+Apache-2.0. See [LICENSE](./LICENSE) for details.
