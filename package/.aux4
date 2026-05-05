@@ -40,7 +40,7 @@
         {
           "name": "login",
           "execute": [
-            "aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com"
+            "aws ecr get-login-password --region ${region} param(profile**) | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com"
           ],
           "help": {
             "text": "Authenticate with AWS ECR",
@@ -55,6 +55,11 @@
                 "name": "accountId",
                 "text": "AWS account ID",
                 "env": "AWS_ACCOUNT_ID"
+              },
+              {
+                "name": "profile",
+                "text": "AWS CLI profile",
+                "env": "AWS_PROFILE"
               }
             ]
           }
@@ -62,7 +67,7 @@
         {
           "name": "push",
           "execute": [
-            "aux4 registry aws login --region '${region}' --accountId '${accountId}'",
+            "aux4 registry aws login --region '${region}' --accountId '${accountId}' --profile '${profile}'",
             "docker tag ${image} ${accountId}.dkr.ecr.${region}.amazonaws.com/${repository}:${imageTag}",
             "docker push ${accountId}.dkr.ecr.${region}.amazonaws.com/${repository}:${imageTag}"
           ],
@@ -93,6 +98,11 @@
                 "name": "accountId",
                 "text": "AWS account ID",
                 "env": "AWS_ACCOUNT_ID"
+              },
+              {
+                "name": "profile",
+                "text": "AWS CLI profile",
+                "env": "AWS_PROFILE"
               }
             ]
           }
@@ -100,7 +110,7 @@
         {
           "name": "create",
           "execute": [
-            "aws ecr describe-repositories --repository-names ${repository} --region ${region} > /dev/null 2>&1 || aws ecr create-repository --repository-name ${repository} --region ${region}"
+            "aws ecr describe-repositories --repository-names ${repository} --region ${region} param(profile**) > /dev/null 2>&1 || aws ecr create-repository --repository-name ${repository} --region ${region} param(profile**)"
           ],
           "help": {
             "text": "Create an ECR repository if it does not exist",
@@ -115,6 +125,11 @@
                 "text": "AWS region",
                 "env": "AWS_REGION",
                 "default": "us-east-1"
+              },
+              {
+                "name": "profile",
+                "text": "AWS CLI profile",
+                "env": "AWS_PROFILE"
               }
             ]
           }
