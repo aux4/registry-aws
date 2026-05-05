@@ -1,0 +1,125 @@
+{
+  "scope": "community",
+  "name": "registry-aws",
+  "version": "0.1.0",
+  "description": "AWS ECR registry integration for aux4",
+  "license": "Apache-2.0",
+  "dependencies": [
+    "aux4/registry"
+  ],
+  "system": [
+    [
+      "test:aws --version",
+      "brew:awscli",
+      "linux:awscli"
+    ]
+  ],
+  "tags": [
+    "registry",
+    "aws",
+    "ecr"
+  ],
+  "profiles": [
+    {
+      "name": "registry",
+      "commands": [
+        {
+          "name": "aws",
+          "execute": [
+            "profile:registry:aws"
+          ],
+          "help": {
+            "text": "AWS ECR registry commands"
+          }
+        }
+      ]
+    },
+    {
+      "name": "registry:aws",
+      "commands": [
+        {
+          "name": "login",
+          "execute": [
+            "aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com"
+          ],
+          "help": {
+            "text": "Authenticate with AWS ECR",
+            "variables": [
+              {
+                "name": "region",
+                "text": "AWS region",
+                "env": "AWS_REGION",
+                "default": "us-east-1"
+              },
+              {
+                "name": "accountId",
+                "text": "AWS account ID",
+                "env": "AWS_ACCOUNT_ID"
+              }
+            ]
+          }
+        },
+        {
+          "name": "push",
+          "execute": [
+            "aux4 registry aws login --region '${region}' --accountId '${accountId}'",
+            "docker tag ${image} ${accountId}.dkr.ecr.${region}.amazonaws.com/${repository}:${imageTag}",
+            "docker push ${accountId}.dkr.ecr.${region}.amazonaws.com/${repository}:${imageTag}"
+          ],
+          "help": {
+            "text": "Tag and push an image to ECR",
+            "variables": [
+              {
+                "name": "image",
+                "text": "The local image to push",
+                "arg": true
+              },
+              {
+                "name": "repository",
+                "text": "The ECR repository name"
+              },
+              {
+                "name": "imageTag",
+                "text": "The image tag",
+                "default": "latest"
+              },
+              {
+                "name": "region",
+                "text": "AWS region",
+                "env": "AWS_REGION",
+                "default": "us-east-1"
+              },
+              {
+                "name": "accountId",
+                "text": "AWS account ID",
+                "env": "AWS_ACCOUNT_ID"
+              }
+            ]
+          }
+        },
+        {
+          "name": "create",
+          "execute": [
+            "aws ecr describe-repositories --repository-names ${repository} --region ${region} > /dev/null 2>&1 || aws ecr create-repository --repository-name ${repository} --region ${region}"
+          ],
+          "help": {
+            "text": "Create an ECR repository if it does not exist",
+            "variables": [
+              {
+                "name": "repository",
+                "text": "The ECR repository name",
+                "arg": true
+              },
+              {
+                "name": "region",
+                "text": "AWS region",
+                "env": "AWS_REGION",
+                "default": "us-east-1"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
