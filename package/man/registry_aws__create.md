@@ -7,11 +7,12 @@ Internally, it first checks if the repository exists by running `aws ecr describ
 #### Usage
 
 ```bash
-aux4 registry aws create <repository> [--region <region>]
+aux4 registry aws create <repository> [--region <region>] [--profile <profile>]
 ```
 
 repository  The ECR repository name (positional, required)
 --region    AWS region (default: us-east-1, env: AWS_REGION)
+--profile   AWS CLI profile (env: AWS_PROFILE)
 
 #### Example
 

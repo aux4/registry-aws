@@ -13,7 +13,7 @@ The `image` argument is positional and refers to the local Docker image (e.g., `
 #### Usage
 
 ```bash
-aux4 registry aws push <image> --repository <name> [--imageTag <tag>] [--region <region>] --accountId <account-id>
+aux4 registry aws push <image> --repository <name> [--imageTag <tag>] [--region <region>] --accountId <account-id> [--profile <profile>]
 ```
 
 image        The local Docker image to push (positional, required)
@@ -21,6 +21,7 @@ image        The local Docker image to push (positional, required)
 --imageTag   The image tag (default: latest)
 --region     AWS region (default: us-east-1, env: AWS_REGION)
 --accountId  AWS account ID (required, env: AWS_ACCOUNT_ID)
+--profile    AWS CLI profile (env: AWS_PROFILE)
 
 #### Example
 

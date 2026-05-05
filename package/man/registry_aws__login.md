@@ -7,11 +7,12 @@ You must have valid AWS credentials configured (via `aws configure`, environment
 #### Usage
 
 ```bash
-aux4 registry aws login --accountId <account-id> [--region <region>]
+aux4 registry aws login --accountId <account-id> [--region <region>] [--profile <profile>]
 ```
 
 --accountId  AWS account ID (required, env: AWS_ACCOUNT_ID)
 --region     AWS region (default: us-east-1, env: AWS_REGION)
+--profile    AWS CLI profile (env: AWS_PROFILE)
 
 #### Example
 

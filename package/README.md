@@ -41,6 +41,7 @@ You can set these environment variables to avoid passing flags on every command:
 
 - `AWS_REGION` -- AWS region (default: `us-east-1`)
 - `AWS_ACCOUNT_ID` -- AWS account ID
+- `AWS_PROFILE` -- AWS CLI profile name
 
 ```bash
 export AWS_REGION=us-west-2
@@ -60,12 +61,14 @@ Authenticate with AWS ECR. This obtains a login password from ECR using the AWS 
 ```bash
 aux4 registry aws login --accountId 123456789012
 aux4 registry aws login --accountId 123456789012 --region us-west-2
+aux4 registry aws login --accountId 123456789012 --profile production
 ```
 
 | Flag | Description | Default | Env |
 |------|-------------|---------|-----|
 | `--region` | AWS region | `us-east-1` | `AWS_REGION` |
 | `--accountId` | AWS account ID | -- | `AWS_ACCOUNT_ID` |
+| `--profile` | AWS CLI profile | -- | `AWS_PROFILE` |
 
 ### registry aws push
 
@@ -85,6 +88,7 @@ The image argument is positional. If `--imageTag` is not specified, it defaults 
 | `--imageTag` | The image tag | `latest` | -- |
 | `--region` | AWS region | `us-east-1` | `AWS_REGION` |
 | `--accountId` | AWS account ID | -- | `AWS_ACCOUNT_ID` |
+| `--profile` | AWS CLI profile | -- | `AWS_PROFILE` |
 
 ### registry aws create
 
@@ -101,6 +105,7 @@ The repository name is a positional argument.
 |------|-------------|---------|-----|
 | `repository` | The ECR repository name (positional) | -- | -- |
 | `--region` | AWS region | `us-east-1` | `AWS_REGION` |
+| `--profile` | AWS CLI profile | -- | `AWS_PROFILE` |
 
 ## Examples
 
